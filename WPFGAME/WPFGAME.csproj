@@ -11,7 +11,7 @@
   <ItemGroup>
     <None Remove="Fonts\PressStart2P-Regular.ttf" />
     <None Remove="Fonts\Roboto-Regular.ttf" />
-    <None Remove="gracz.png" />
+    <None Remove="gracz2.png" />
     <None Remove="Images\dirt.png" />
     <None Remove="Images\sand.png" />
     <None Remove="Images\sky.png" />
@@ -22,7 +22,8 @@
   <ItemGroup>
     <Resource Include="Fonts\PressStart2P-Regular.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />
-    <Resource Include="gracz.png" />
+    <Resource Include="Images\gracz1.png" />
+    <Resource Include="Images\gracz2.png" />
     <Resource Include="Images\dirt.png" />
     <Resource Include="Images\grass.png" />
     <Resource Include="Images\sand.png" />

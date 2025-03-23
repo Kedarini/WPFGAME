@@ -1,7 +1,9 @@
 ﻿using System;
 using System.IO;
+using System.Security.Cryptography.X509Certificates;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
@@ -13,10 +15,14 @@ namespace WPFGAME
     {
         public int LoadedSave;
         private int[,]? map;
+        public int nrPostaci = 1;
+        private int characterX = 20; // Starting position on X-axis (grid column)
+        private int characterY = 11; // Starting position on Y-axis (grid row)
 
         public MainWindow()
         {
             InitializeComponent();
+            this.KeyDown += Window_KeyDown;
             GenerateMapsIfNotExists();  // Generate maps when the app starts
         }
 
@@ -82,8 +88,6 @@ namespace WPFGAME
                 }
             }
         }
-
-
 
         // Method to load a map from a file
         private void LoadMapFromFile(string filePath)
@@ -174,10 +178,66 @@ namespace WPFGAME
                 }
             }
 
+            // Display the character as an image
+            Image character = new Image
+            {
+                Width = 50,
+                Height = 50,
+                Source = new BitmapImage(new Uri($"pack://application:,,,/Images/gracz{nrPostaci}.png")) // Character image
+            };
+
+            // Set the character's position in the grid
+            Grid.SetRow(character, characterY);
+            Grid.SetColumn(character, characterX);
+
+            mapGrid.Children.Add(character);
+
             // Set the grid as the window content
             this.Content = mapGrid;
         }
 
+
+        private void MoveCharacter(int deltaX, int deltaY)
+        {
+            // Calculate the new position based on current position
+            int newX = characterX + deltaX;
+            int newY = characterY + deltaY;
+
+            // Check if the new position is within bounds of the map
+            if (newX >= 0 && newX < map.GetLength(1) && newY >= 0 && newY < map.GetLength(0))
+            {
+                // Check if the tile at the new position is not sky (tile 5)
+                if (map[newY, newX] != 5) // Sky is non-collidable
+                {
+                    characterX = newX;  // Update the character's X position
+                    characterY = newY;  // Update the character's Y position
+                }
+            }
+
+            // Redraw the map with the updated character position
+            DisplayMap();
+        }
+
+        // Use key events to move the character
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Up)
+            {
+                MoveCharacter(0, -1); // Move up
+            }
+            else if (e.Key == Key.Down)
+            {
+                MoveCharacter(0, 1); // Move down
+            }
+            else if (e.Key == Key.Left)
+            {
+                MoveCharacter(-1, 0); // Move left
+            }
+            else if (e.Key == Key.Right)
+            {
+                MoveCharacter(1, 0); // Move right
+            }
+        }
         private string GetTileImagePath(int tileType)
         {
             // Return the correct path for each tile's image
@@ -277,6 +337,7 @@ namespace WPFGAME
             if (LoadedSave != 0)
             {
                 LoadMapFromFile($"map{LoadedSave}.txt");
+                this.WindowState = WindowState.Maximized;
             }
             else
             {
@@ -284,6 +345,11 @@ namespace WPFGAME
                 ShowAlertText();
             }
         }
+        private void Window_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.Focus(); // Ensures the window has focus to receive key events
+        }
+
         private void AnimateSaveGrid()
         {
             // Make sure the RenderTransformOrigin is set to (0.3, 0.3) to animate from the center
@@ -408,6 +474,32 @@ namespace WPFGAME
                 // Regenerate the map after deletion
                 GenerateMapIfNotExists(mapFileName); // This will regenerate the map if it doesn't exist
             }
+        }
+
+        private void PreviousCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            if (nrPostaci > 1)
+            {
+                nrPostaci -= 1;
+            }
+            else
+            {
+                nrPostaci = 2;  // Go to the last character when at the first one
+            }
+            PostacGracza.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/gracz{nrPostaci}.png"));
+        }
+
+        private void NextCharacter_Click(object sender, RoutedEventArgs e)
+        {
+            if (nrPostaci < 2)
+            {
+                nrPostaci += 1;
+            }
+            else
+            {
+                nrPostaci = 1;  // Go back to the first character when at the last one
+            }
+            PostacGracza.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/gracz{nrPostaci}.png"));
         }
     }
 }

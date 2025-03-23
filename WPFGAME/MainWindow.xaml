@@ -5,7 +5,9 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFGAME"
         mc:Ignorable="d"
-        Title="WPFGAME" Height="450" Width="800">
+        Title="WPFGAME" Height="450" Width="800"
+        KeyDown="Window_KeyDown"
+        Loaded="Window_Loaded">
     <Grid>
         <TextBlock Name="AlertText" Text="" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20"/>
         <Border CornerRadius="15" Background="#7F808080" Width="250" Margin="0,10,0,10">
@@ -24,9 +26,9 @@
             <Button Name="Load" Style="{StaticResource ButtonMainMenu}" VerticalAlignment="Center" Content="Load" Click="Load_Click"/>
         </Border>
         <TextBlock Text="CHARACTER" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,32,0"/>
-        <Image HorizontalAlignment="Right" VerticalAlignment="Center" Height="128" Width="128" Margin="0,0,75,5" Name="PostacGracza" Source="gracz.png" Stretch="Fill"/>
-        <Button Style="{StaticResource SavesButton}" Margin="0,0,25,0" Content=">" Width="50" Height="50" FontSize="48" HorizontalAlignment="Right"/>
-        <Button Style="{StaticResource SavesButton}" Margin="0,0,200,0" Content="&lt;" Width="50" Height="50" FontSize="48" HorizontalAlignment="Right"/>
+        <Image HorizontalAlignment="Right" VerticalAlignment="Center" Height="128" Width="128" Margin="0,0,75,5" Name="PostacGracza" Source="gracz1.png" Stretch="Fill"/>
+        <Button Name="NextCharacter" Click="NextCharacter_Click" Style="{StaticResource SavesButton}" Margin="0,0,25,0" Content=">" Width="50" Height="50" FontSize="48" HorizontalAlignment="Right"/>
+        <Button Name="PreviousCharacter" Click="PreviousCharacter_Click" Style="{StaticResource SavesButton}" Margin="0,0,200,0" Content="&lt;" Width="50" Height="50" FontSize="48" HorizontalAlignment="Right"/>
         <Border CornerRadius="8" Width="120" Height="50" VerticalAlignment="Bottom" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Right" Margin="0,0,80,75" Background="LightGray">
             <TextBox Text="Player_1" Name="Nickname" FontWeight="UltraBlack" HorizontalAlignment="Center" FontSize="18" MaxLength="16" BorderThickness="0" Background="{x:Null}" VerticalAlignment="Center"/>
         </Border>
