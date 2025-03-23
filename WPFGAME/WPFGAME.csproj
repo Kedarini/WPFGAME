@@ -8,4 +8,27 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="Fonts\PressStart2P-Regular.ttf" />
+    <None Remove="Fonts\Roboto-Regular.ttf" />
+    <None Remove="gracz.png" />
+    <None Remove="Images\dirt.png" />
+    <None Remove="Images\sand.png" />
+    <None Remove="Images\sky.png" />
+    <None Remove="Images\stone.png" />
+    <None Remove="Images\water.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Fonts\PressStart2P-Regular.ttf" />
+    <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="gracz.png" />
+    <Resource Include="Images\dirt.png" />
+    <Resource Include="Images\grass.png" />
+    <Resource Include="Images\sand.png" />
+    <Resource Include="Images\sky.png" />
+    <Resource Include="Images\stone.png" />
+    <Resource Include="Images\water.png" />
+  </ItemGroup>
+
 </Project>
