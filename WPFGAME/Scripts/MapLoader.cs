@@ -142,6 +142,9 @@ namespace WPFGAME
                 4 => "pack://application:,,,/Images/stone.png", // Mountain
                 5 => "pack://application:,,,/Images/sky.png",   // sky
                 6 => "pack://application:,,,/Images/dirt.png",  // dirt
+                7 => "pack://application:,,,/Images/grass_corner_left.png",
+                8 => "pack://application:,,,/Images/grass_corner_right.png",
+                9 => "pack://application:,,,/Images/stone_background.png",
                 _ => "pack://application:,,,/Images/water.png"  // Default fallback image
             };
         }

@@ -13,9 +13,11 @@
     <None Remove="Fonts\Roboto-Regular.ttf" />
     <None Remove="gracz2.png" />
     <None Remove="Images\dirt.png" />
+    <None Remove="Images\grass_corner_left.png" />
     <None Remove="Images\sand.png" />
     <None Remove="Images\sky.png" />
     <None Remove="Images\stone.png" />
+    <None Remove="Images\stone_background.png" />
     <None Remove="Images\water.png" />
   </ItemGroup>
 
@@ -26,9 +28,12 @@
     <Resource Include="Images\gracz2.png" />
     <Resource Include="Images\dirt.png" />
     <Resource Include="Images\grass.png" />
+    <Resource Include="Images\grass_corner_left.png" />
+    <Resource Include="Images\grass_corner_right.png" />
     <Resource Include="Images\sand.png" />
     <Resource Include="Images\sky.png" />
     <Resource Include="Images\stone.png" />
+    <Resource Include="Images\stone_background.png" />
     <Resource Include="Images\water.png" />
   </ItemGroup>
 

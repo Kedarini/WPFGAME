@@ -34,19 +34,19 @@ namespace WPFGAME
                 }
             }
 
-            // Step 2: Fill the background with pastel gray (7) below the sky
+            // Step 2: Fill the background with pastel gray (9) below the sky
             for (int i = skyHeight; i < rows; i++)
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    map[i, j] = 7; // Pastel gray background
+                    map[i, j] = 9; // Pastel gray background
                 }
             }
 
             // Step 3: Generate grass with varying heights
             int currentHeight = skyHeight;
             int sameHeightCount = 0;
-            int maxSameHeight = random.Next(2, 6); // Randomly choose between 2 and 5 for the same height
+            int maxSameHeight = random.Next(2, 6);
 
             for (int j = 0; j < cols; j++)
             {
@@ -59,7 +59,27 @@ namespace WPFGAME
                     maxSameHeight = random.Next(2, 6); // Randomly choose a new maxSameHeight
                 }
 
-                map[currentHeight, j] = 2; // Grass
+                // Check for smooth transitions
+                if (j > 0 && map[currentHeight, j - 1] == 2)
+                {
+                    if (currentHeight < rows - 1 && map[currentHeight + 1, j - 1] == 2)
+                    {
+                        map[currentHeight, j] = 7; // grass_corner_left
+                    }
+                    else if (currentHeight > skyHeight && map[currentHeight - 1, j - 1] == 2)
+                    {
+                        map[currentHeight, j] = 8; // grass_corner_right
+                    }
+                    else
+                    {
+                        map[currentHeight, j] = 2; // Grass
+                    }
+                }
+                else
+                {
+                    map[currentHeight, j] = 2; // Grass
+                }
+
                 sameHeightCount++;
 
                 // Step 4: Fill the dirt (6) just below the grass
@@ -74,9 +94,9 @@ namespace WPFGAME
             {
                 for (int j = 0; j < cols; j++)
                 {
-                    if (map[i, j] == 7) // Only replace pastel gray background with water
+                    if (map[i, j] == 9)
                     {
-                        map[i, j] = 1; // Water
+                        map[i, j] = 1;
                     }
                 }
             }
@@ -88,7 +108,7 @@ namespace WPFGAME
                 {
                     for (int j = 0; j < cols; j++)
                     {
-                        writer.Write(map[i, j] + " "); // Write each cell's value
+                        writer.Write(map[i, j] + " ");
                     }
                     writer.WriteLine();
                 }
