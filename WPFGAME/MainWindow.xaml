@@ -5,11 +5,13 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WPFGAME"
         mc:Ignorable="d"
-        Title="WPFGAME" Height="450" Width="800"
+        Title="Minecraft 2D" Height="450" Width="800"
+        Icon="Images/grass.png"
         KeyDown="Window_KeyDown"
         Loaded="Window_Loaded">
     <Grid>
-        <TextBlock Name="AlertText" Text="" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20"/>
+        <Grid Visibility="Visible" Name="MainMenu">
+            <TextBlock Name="AlertText" Text="" FontSize="18" VerticalAlignment="Bottom" HorizontalAlignment="Left" Margin="20,0,0,20"/>
         <Border CornerRadius="15" Background="#7F808080" Width="250" Margin="0,10,0,10">
             <TextBlock FontSize="46" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,50,0,0" Text="SAVES"/>
         </Border>
@@ -26,7 +28,7 @@
             <Button Name="Load" Style="{StaticResource ButtonMainMenu}" VerticalAlignment="Center" Content="Load" Click="Load_Click"/>
         </Border>
         <TextBlock Text="CHARACTER" FontSize="24" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,100,32,0"/>
-        <Image HorizontalAlignment="Right" VerticalAlignment="Center" Height="128" Width="128" Margin="0,0,75,5" Name="PostacGracza" Source="gracz1.png" Stretch="Fill"/>
+        <Image HorizontalAlignment="Right" VerticalAlignment="Center" Height="128" Width="128" Margin="0,0,75,5" Name="PostacGracza" Source="pack://application:,,,/Images/gracz2.png"/>
         <Button Name="NextCharacter" Click="NextCharacter_Click" Style="{StaticResource SavesButton}" Margin="0,0,25,0" Content=">" Width="50" Height="50" FontSize="48" HorizontalAlignment="Right"/>
         <Button Name="PreviousCharacter" Click="PreviousCharacter_Click" Style="{StaticResource SavesButton}" Margin="0,0,200,0" Content="&lt;" Width="50" Height="50" FontSize="48" HorizontalAlignment="Right"/>
         <Border CornerRadius="8" Width="120" Height="50" VerticalAlignment="Bottom" BorderBrush="Black" BorderThickness="3" HorizontalAlignment="Right" Margin="0,0,80,75" Background="LightGray">
@@ -44,6 +46,29 @@
             </Border>
             <Border BorderThickness="5" CornerRadius="15" Background="#7F808080" Width="200" Height="75" HorizontalAlignment="Left" VerticalAlignment="Center" Margin="65,225,0,0">
                 <Button Name="Restart" Content="Restart" Width="200" Height="50" Style="{StaticResource ButtonMainMenu}" Margin="-5,0,0,0" FontSize="22" Click="Restart_Click"/>
+            </Border>
+        </Grid>
+    </Grid>
+        <Grid Name="GameGrid" Visibility="Hidden">
+            <ContentControl x:Name="MapContentControl" />
+            <Button Name="GoBackToMainMenu" Style="{StaticResource ButtonMainMenu}" Content="X" HorizontalAlignment="Right" VerticalAlignment="Top" Click="GoBackToMainMenu_Click" Margin="0,20,25,0"/>
+            <Button Name="Backpack" Style="{StaticResource ButtonMainMenu}" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="0,75,20,0">
+                <Image Source="Images/backpack.png" Height="48" Width="48"/>
+            </Button>
+            <Border Name="eqslot1" BorderBrush="Black" BorderThickness="3" CornerRadius="15" Background="#7F808080" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,50">
+                <Image/>
+            </Border>
+            <Border Name="eqslot2" BorderBrush="Black" BorderThickness="3" CornerRadius="15" Background="#7F808080" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="128,0,0,50">
+                <Image/>
+            </Border>
+            <Border Name="eqslot3" BorderBrush="Black" BorderThickness="3" CornerRadius="15" Background="#7F808080" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="256,0,0,50">
+                <Image/>
+            </Border>
+            <Border Name="eqslot4" BorderBrush="Black" BorderThickness="3" CornerRadius="15" Background="#7F808080" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,128,50">
+                <Image/>
+            </Border>
+            <Border Name="eqslot5" BorderBrush="Black" BorderThickness="3" CornerRadius="15" Background="#7F808080" Width="64" Height="64" HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,256,50">
+                <Image/>
             </Border>
         </Grid>
     </Grid>

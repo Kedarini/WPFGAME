@@ -1,4 +1,3 @@
-using System;
 using System.IO;
 using System.Windows;
 using System.Windows.Controls;
@@ -12,12 +11,17 @@ namespace WPFGAME
         private int nrPostaci;
         private int characterX;
         private int characterY;
+        private readonly BlockBreaker blockBreaker;
+
+        public Grid MapGrid { get; private set; }
 
         public MapLoader(int nrPostaci, int characterX, int characterY)
         {
             this.nrPostaci = nrPostaci;
             this.characterX = characterX;
             this.characterY = characterY;
+            MapGrid = new Grid();
+            blockBreaker = new BlockBreaker(this);
         }
 
         public int[,]? GetMap()
@@ -79,19 +83,21 @@ namespace WPFGAME
         {
             if (map == null) return;
 
-            // Create a Grid to display the map
-            Grid mapGrid = new Grid();
+            // Clear previous children
+            MapGrid.Children.Clear();
+            MapGrid.RowDefinitions.Clear();
+            MapGrid.ColumnDefinitions.Clear();
 
             // Set row definitions based on the number of rows in the map
             for (int i = 0; i < map.GetLength(0); i++)
             {
-                mapGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(50) }); // Set row height to 50
+                MapGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(32) }); // Set row height to 32
             }
 
             // Set column definitions based on the number of columns in the map
             for (int j = 0; j < map.GetLength(1); j++)
             {
-                mapGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(50) }); // Set column width to 50
+                MapGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(32) }); // Set column width to 32
             }
 
             // Iterate through the map and add the tiles as images
@@ -99,55 +105,93 @@ namespace WPFGAME
             {
                 for (int j = 0; j < map.GetLength(1); j++)
                 {
-                    Image tile = new Image
-                    {
-                        Width = 50,
-                        Height = 50,
-                        Source = new BitmapImage(new Uri(GetTileImagePath(map[i, j]))) // Set the image source based on tile type
-                    };
+                    string imagePath = GetTileImagePath(map[i, j]);
+                    Console.WriteLine($"Tile at ({i}, {j}) with type {map[i, j]} uses image path: {imagePath}");
 
-                    // Set the position of each tile in the grid
-                    Grid.SetRow(tile, i);
-                    Grid.SetColumn(tile, j);
-                    mapGrid.Children.Add(tile);
+                    try
+                    {
+                        Image tile = new Image
+                        {
+                            Width = 32,
+                            Height = 32,
+                            Source = new BitmapImage(new Uri(imagePath, UriKind.RelativeOrAbsolute)) // Set the image source based on tile type
+                        };
+
+                        // Set the position of each tile in the grid
+                        Grid.SetRow(tile, i);
+                        Grid.SetColumn(tile, j);
+                        MapGrid.Children.Add(tile);
+
+                        // Add mouse event handler for breaking blocks
+                        if (blockBreaker.IsWithinRange(characterX, characterY, i, j))
+                        {
+                            tile.MouseLeftButtonDown += (sender, e) =>
+                            {
+                                Console.WriteLine($"Mouse clicked on tile at ({i}, {j})");
+                                blockBreaker.BreakBlock(i, j);
+                            };
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        Console.WriteLine($"Error loading image at ({i}, {j}) with path {imagePath}: {ex.Message}");
+                    }
                 }
             }
 
             // Display the character as an image
             Image character = new Image
             {
-                Width = 50,
-                Height = 50,
-                Source = new BitmapImage(new Uri($"pack://application:,,,/Images/gracz{nrPostaci}.png")) // Character image
+                Width = 32,
+                Height = 64,
+                Source = new BitmapImage(new Uri($"pack://application:,,,/Images/gracz{nrPostaci}.png", UriKind.RelativeOrAbsolute)) // Character image
             };
 
             // Set the character's position in the grid
             Grid.SetRow(character, characterY);
             Grid.SetColumn(character, characterX);
 
-            mapGrid.Children.Add(character);
-
-            // Set the grid as the window content
-            Application.Current.MainWindow.Content = mapGrid;
+            MapGrid.Children.Add(character);
         }
 
         private string GetTileImagePath(int tileType)
         {
+            // Log the tileType value
+            Console.WriteLine($"Tile type: {tileType}");
+
             // Return the correct path for each tile's image
             return tileType switch
             {
                 1 => "pack://application:,,,/Images/water.png", // Water
-                2 => "pack://application:,,,/Images/grass.png", // Grass (or forest, if you have such an image)
+                2 => "pack://application:,,,/Images/grass.png", // Grass
                 3 => "pack://application:,,,/Images/sand.png",  // Sand
                 4 => "pack://application:,,,/Images/stone.png", // Mountain
-                5 => "pack://application:,,,/Images/sky.png",   // sky
-                6 => "pack://application:,,,/Images/dirt.png",  // dirt
-                7 => "pack://application:,,,/Images/grass_corner_left.png",
-                8 => "pack://application:,,,/Images/grass_corner_right.png",
-                9 => "pack://application:,,,/Images/stone_background.png",
+                5 => "pack://application:,,,/Images/sky.png",   // Sky
+                6 => "pack://application:,,,/Images/dirt.png",  // Dirt
+                7 => "pack://application:,,,/Images/grass_corner_left.png", // Grass corner left
+                8 => "pack://application:,,,/Images/grass_corner_right.png", // Grass corner right
+                9 => "pack://application:,,,/Images/stone_background.png", // Stone background
+                10 => "pack://application:,,,/Images/leaves.png", // Leaves
+                11 => "pack://application:,,,/Images/log.png", // Log
+                12 => "pack://application:,,,/Images/sugarcane.png", // Log
+                13 => "pack://application:,,,/Images/coal_ore.png", // Log
+                14 => "pack://application:,,,/Images/iron_ore.png", // Log
+                15 => "pack://application:,,,/Images/lapis_ore.png", // Log
+                16 => "pack://application:,,,/Images/emerald_ore.png", // Log
+                17 => "pack://application:,,,/Images/diamond_ore.png", // Log
+                18 => "pack://application:,,,/Images/copper_ore.png", // Log
+                19 => "pack://application:,,,/Images/redstone_ore.png", // Log
+                20 => "pack://application:,,,/Images/gold_ore.png", // Log
+                21 => "pack://application:,,,/Images/bedrock.png", // Log
                 _ => "pack://application:,,,/Images/water.png"  // Default fallback image
             };
         }
+
+        public void UpdateCharacterPosition(int newX, int newY)
+        {
+            characterX = newX;
+            characterY = newY;
+            DisplayMap();
+        }
     }
 }
-

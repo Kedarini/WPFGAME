@@ -12,28 +12,60 @@
     <None Remove="Fonts\PressStart2P-Regular.ttf" />
     <None Remove="Fonts\Roboto-Regular.ttf" />
     <None Remove="gracz2.png" />
+    <None Remove="Images\backpack.png" />
+    <None Remove="Images\bedrock.png" />
+    <None Remove="Images\coal_ore.png" />
+    <None Remove="Images\copper_ore.png" />
+    <None Remove="Images\diamond_ore.png" />
     <None Remove="Images\dirt.png" />
+    <None Remove="Images\emerald_ore.png" />
+    <None Remove="Images\gold_ore.png" />
+    <None Remove="Images\gracz3.png" />
     <None Remove="Images\grass_corner_left.png" />
+    <None Remove="Images\iron_ore.png" />
+    <None Remove="Images\lapis_ore.png" />
+    <None Remove="Images\leaves.png" />
+    <None Remove="Images\log.png" />
+    <None Remove="Images\redstone_ore.png" />
     <None Remove="Images\sand.png" />
     <None Remove="Images\sky.png" />
+    <None Remove="Images\Steve_left.png" />
+    <None Remove="Images\Steve_right.png" />
     <None Remove="Images\stone.png" />
     <None Remove="Images\stone_background.png" />
+    <None Remove="Images\sugarcane.png" />
     <None Remove="Images\water.png" />
   </ItemGroup>
 
   <ItemGroup>
     <Resource Include="Fonts\PressStart2P-Regular.ttf" />
     <Resource Include="Fonts\Roboto-Regular.ttf" />
+    <Resource Include="Images\backpack.png" />
+    <Resource Include="Images\bedrock.png" />
+    <Resource Include="Images\coal_ore.png" />
+    <Resource Include="Images\copper_ore.png" />
+    <Resource Include="Images\diamond_ore.png" />
+    <Resource Include="Images\emerald_ore.png" />
+    <Resource Include="Images\gold_ore.png" />
     <Resource Include="Images\gracz1.png" />
     <Resource Include="Images\gracz2.png" />
     <Resource Include="Images\dirt.png" />
+    <Resource Include="Images\gracz3.png" />
     <Resource Include="Images\grass.png" />
     <Resource Include="Images\grass_corner_left.png" />
     <Resource Include="Images\grass_corner_right.png" />
+    <Resource Include="Images\iron_ore.png" />
+    <Resource Include="Images\lapis_ore.png" />
+    <Resource Include="Images\leaves.png" />
+    <Resource Include="Images\log.png" />
+    <Resource Include="Images\redstone_ore.png" />
     <Resource Include="Images\sand.png" />
     <Resource Include="Images\sky.png" />
+    <Resource Include="Images\Steve_left.png" />
+    <Resource Include="Images\Steve_right.png" />
     <Resource Include="Images\stone.png" />
     <Resource Include="Images\stone_background.png" />
+    <Resource Include="Images\sugarcane.png" />
     <Resource Include="Images\water.png" />
   </ItemGroup>
 

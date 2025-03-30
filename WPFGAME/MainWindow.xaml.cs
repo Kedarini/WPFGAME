@@ -14,7 +14,7 @@ namespace WPFGAME
     {
         public int LoadedSave;
         private int[,]? map;
-        public int nrPostaci = 1;
+        public int nrPostaci = 3;
         private int characterX = 20;
         private int characterY = 11;
         private MapGenerator mapGenerator;
@@ -30,12 +30,14 @@ namespace WPFGAME
             mapLoader = new MapLoader(nrPostaci, characterX, characterY);
             this.KeyDown += Window_KeyDown;
             this.Loaded += Window_Loaded;
+            mapLoader = new MapLoader(1, 5, 5); // Example initialization
+            mapLoader.LoadMapFromFile("map1.txt");
+
+            // Set the ContentControl to display the MapGrid
+            MapContentControl.Content = mapLoader.MapGrid;
 
             // Initialize the collision configuration
             CollisionConfig collisionConfig = new CollisionConfig();
-
-            // Load the map
-            map = mapLoader.GetMap();
 
             // Check if the map is null and initialize it if necessary
             if (map == null)
@@ -43,8 +45,8 @@ namespace WPFGAME
                 map = new int[20, 20]; // Example size, adjust as needed
             }
 
-            // Initialize the character movement
-            characterMovement = new CharacterMovement(map, characterX, characterY, nrPostaci, collisionConfig);
+            // Initialize the character movement with the map loader
+            characterMovement = new CharacterMovement(map, characterX, characterY, nrPostaci, collisionConfig, mapLoader);
         }
 
         // Handling save slot selection for save1
@@ -132,7 +134,13 @@ namespace WPFGAME
             {
                 mapLoader.LoadMapFromFile($"map{LoadedSave}.txt");
                 CollisionConfig collisionConfig = new CollisionConfig();
-                characterMovement = new CharacterMovement(mapLoader.GetMap(), characterX, characterY, nrPostaci, collisionConfig);
+                characterMovement = new CharacterMovement(mapLoader.GetMap(), characterX, characterY, nrPostaci, collisionConfig, mapLoader);
+
+                GameGrid.Visibility = Visibility.Visible;
+                MainMenu.Visibility = Visibility.Hidden;
+
+                // Set the window to fullscreen mode
+                this.WindowStyle = WindowStyle.None;
                 this.WindowState = WindowState.Maximized;
             }
             else
@@ -225,7 +233,7 @@ namespace WPFGAME
 
         private void PreviousCharacter_Click(object sender, RoutedEventArgs e)
         {
-            if (nrPostaci > 1)
+            if (nrPostaci > 2)
             {
                 nrPostaci -= 1;
             }
@@ -238,7 +246,7 @@ namespace WPFGAME
 
         private void NextCharacter_Click(object sender, RoutedEventArgs e)
         {
-            if (nrPostaci < 2)
+            if (nrPostaci < 3)
             {
                 nrPostaci += 1;
             }
@@ -247,6 +255,12 @@ namespace WPFGAME
                 nrPostaci = 1;  // Go back to the first character when at the last one
             }
             PostacGracza.Source = new BitmapImage(new Uri($"pack://application:,,,/Images/gracz{nrPostaci}.png"));
+        }
+
+        private void GoBackToMainMenu_Click(object sender, RoutedEventArgs e)
+        {
+            GameGrid.Visibility = Visibility.Hidden;
+            MainMenu.Visibility = Visibility.Visible;
         }
     }
 }
